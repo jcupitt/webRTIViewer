@@ -39,7 +39,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	canvasDiv.style.margin = "auto";
 	canvasDiv.style.position = "relative";
 	canvasContainer.append(canvasDiv);
-	
+
 	var canvasNode = $($("#"+idDiv + "_div")[0]);
 	var canvasName = idDiv + "_webgl";
 	var canvas = document.createElement("canvas");
@@ -47,22 +47,22 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	canvas.width = width;
 	canvas.height = height;
 	canvasNode.append(canvas);
-	
+
 	var aNode = document.createElement("a");
 	aNode.href = "http://vcg.isti.cnr.it/rti/webviewer.php";
 	aNode.target ="_blank";
-	
+
 	var aNodeDiv = document.createElement("div");
 	aNodeDiv.style.width = 80 + "px";
 	aNodeDiv.style.height = 50 + "px";
-	
+
 	aNode.appendChild(aNodeDiv);
 	aNode.style.position = "absolute";
 	aNode.style.bottom = "0px";
 	aNode.style.left = "0px";
 	aNode.style.cssFloat = "left";
 	canvasNode.append(aNode);
-		
+
 	var toolbar = document.createElement("div");
 	toolbar.setAttribute("class", "toolbar");
 	toolbar.style.position = "absolute";
@@ -74,7 +74,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	toolbar.style.visibility = "hidden";
 	toolbar.innerHTML = '<button class = "toolbarButton" id = "zoomIn"></button><button class = "toolbarButton" id = "zoomOut"></button><button class = "toolbarButton" id = "light"></button><button class = "toolbarButton" id = "fullscreen"></button><button class = "toolbarButton" id = "help"></button>'
 	canvasNode.append(toolbar);
-	
+
 	var divHelp = document.createElement("div");
 	divHelp.id = idDiv + "_guide";
 	divHelp.style.width = "100%";
@@ -84,11 +84,11 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	divHelp.style.top = "0px";
 	divHelp.style.color = "#FFFFFF";
 	divHelp.style.backgroundColor="rgba(0, 0, 0, 0.9)";
-	
+
 	divHelp.innerHTML = '<div id = "guideTable"><div id = "guideCell"> <div id = "guideList"><h3>WebRTIViewer<br/></h3><ul><li>Pan: LeftMouseButton + MouseMove.</li><li>Zoom in: MouseWhell or press the button <span><img src = "css/icons/zoomin.png" alt=""/></span></li><li>Zoom out: MouseWheel or press the button <span><img src = "css/icons/zoomout.png" alt=""/></span></li><li>To change the light direction: activate the light with the button <span><img src = "css/icons/light.png" alt=""/></span> and press LeftMouseButton + MouseMove or Ctrl + LeftMouseButton + MouseMove.</li><li>Fullscreen: press the button <span><img src = "css/icons/full.png" alt=""/></span> to active the fullscreen mode and the button <span><img src = "css/icons/full_on.png" alt=""/></span> to exit</li><li>To reset the viewpoint: press R.</li></ul><a href="http://vcg.isti.cnr.it/rti/webviewer.php" target = "_black">Visual Computing Lab ISTI CNR Pisa</a></div></div></div>'
 	divHelp.style.display = "none";
 	canvasNode.append(divHelp);
-	
+
 	$( "#"+idDiv + "_div #zoomIn" ).button({
       icons: {
         primary: "zoomInIcon toolbarIcon"
@@ -568,7 +568,7 @@ MultiRes.prototype = {
 			tx = this.ui.width / 2.0;
 			ty = this.ui.height / 2.0;
 			this.resetViewpoint();
-			if (this.animationStack.lenght == 0)
+			if (this.animationStack.length == 0)
 			{
 				clearInterval(this.zoomInterval);
 				this.renderer.updateData = true;
