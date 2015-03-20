@@ -174,7 +174,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	};
 	
 	function fullScreenOff(){
-		var i = document.getElementById("viewerContainer_div");
+		var i = document.getElementById(idDiv + "_div");
 		if (document.exitFullscreen) {
 			document.exitFullscreen();
 		} else if (document.webkitExitFullscreen) {
@@ -186,7 +186,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 		}
 		i.style.height = canvasHeight + "px";
 		i.style.width = canvasWidth + "px";
-		var canvas = $("#viewerContainer_webgl");
+		var canvas = $("#" + idDiv + "_webgl");
 		canvas.height(canvasHeight);
 		canvas.width(canvasWidth);
 		canvas.attr("width", canvasWidth);
