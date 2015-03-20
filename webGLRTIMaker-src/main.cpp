@@ -5,7 +5,7 @@
 /*  resolution standard image) for the pubblication on the web           */
 /*                                                                       */
 /*  Copyright (C) 2015                                                   */
-/*  Gianpaolo Palma					                                     */
+/*  Gianpaolo Palma                                                      */
 /*  Visual Computing Laboratory                                          */
 /*  ISTI - Italian National Research Council (CNR)                       */
 /*  http://vcg.isti.cnr.it/rti/webviewer.php                             */
@@ -77,9 +77,9 @@ int main( int argc, char ** argv )
 	opt.addOption('r', "ram", "max ram used (in Megabytes default 1024)", &ramLimit);
 	opt.addOption('t', "tileSize", "size of the tile (in pixel default 256)", &ramLimit);
 	opt.addSwitch('p', "png", "save output tiles as png", &pngFormat);
-	
+
 	opt.parse(); 
-	
+
 	QString format("jpg");
 	if (pngFormat)
 		format = "png";

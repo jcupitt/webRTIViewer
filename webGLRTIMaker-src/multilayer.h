@@ -5,7 +5,7 @@
 /*  resolution standard image) for the pubblication on the web           */
 /*                                                                       */
 /*  Copyright (C) 2015                                                   */
-/*  Gianpaolo Palma					                                     */
+/*  Gianpaolo Palma                                                      */
 /*  Visual Computing Laboratory                                          */
 /*  ISTI - Italian National Research Council (CNR)                       */
 /*  http://vcg.isti.cnr.it/rti/webviewer.php                             */
