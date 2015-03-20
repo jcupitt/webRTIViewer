@@ -27,13 +27,13 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/> */
 /*************************************************************************/
 
-
-#include "rti.h"
+#include <stdio.h>
 
 #include <QStringList>
 #include <QDomDocument>
 #include <QDomElement>
 
+#include "rti.h"
 
 
 QString getLine(FILE *file, bool *eof)
@@ -186,7 +186,7 @@ bool Hsh::loadData()
     for (int i = 0; i < coeffNumber; i++)
         coeff[i] = new unsigned char[size];
 
-    int line_size = clippingRect.width() * coeffNumber * 3;
+    size_t line_size = clippingRect.width() * coeffNumber * 3;
     unsigned char* line = new unsigned char[line_size];
 	if (clippingRect.y() > 0)
 	{
@@ -417,7 +417,7 @@ bool PtmLRGB::loadData()
     int multiplexed_channels = 3;
 	if (format == "PTM_1.2")
 		multiplexed_channels = 2;
-    int line_size = clippingRect.width() * multiplexed_channels * 3;
+    size_t line_size = clippingRect.width() * multiplexed_channels * 3;
     unsigned char* line = new unsigned char[line_size];
 	if (h - clippingRect.bottom() - 1 > 0)
 	{
@@ -690,7 +690,7 @@ bool PtmRGB::loadData()
 	for (int i = 0; i < 6; i++)
         coeff[i] = new unsigned char[size];
 
-	int line_size = clippingRect.width() * 6;
+	size_t line_size = clippingRect.width() * 6;
     unsigned char* line = new unsigned char[line_size];
 	
 	long yOffset = w * 6 * (h - clippingRect.bottom() - 1);

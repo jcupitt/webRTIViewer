@@ -27,7 +27,7 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/> */
 /*************************************************************************/
 
-#include "splitter.h"
+#include <math.h>
 
 #include <QPainter>
 #include <QFile>
@@ -35,6 +35,8 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QImage>
+
+#include "splitter.h"
 
 
 void Node::saveTile(const QImage& image, const QString& destFolder, int tileSize, int layerIndex, int quality, const QString& format)
@@ -74,15 +76,15 @@ Tree::Tree()
 
 void Tree::build(const QRect& rect, int size)
 {
-	tileSize = 1 << (int)std::ceil(std::log10f(size) / std::log10f(2.0f));
+	tileSize = 1 << (int)ceil(log10f(size) / log10f(2.0f));
 	int maxImgSize = std::max(rect.height(), rect.width());
-	maxSize = 1 << (int)std::ceil(std::log10f(maxImgSize) / std::log10f(2.0f));
-	nLevels = (int)std::ceil(std::log10f(maxSize) / std::log10f(2.0f)) - (int)std::ceil(std::log10f(tileSize) / std::log10f(2.0f)) + 1;
+	maxSize = 1 << (int)ceil(log10f(maxImgSize) / log10f(2.0f));
+	nLevels = (int)ceil(log10f(maxSize) / log10f(2.0f)) - (int)ceil(log10f(tileSize) / log10f(2.0f)) + 1;
 		
 	int woffset = (maxSize - rect.width()) / 2;
 	int hoffset = (maxSize - rect.height()) / 2;
 
-	int nNodes = (std::pow(4.0f, nLevels) - 1.0f) / 3.0f;
+	int nNodes = (pow(4.0f, nLevels) - 1.0f) / 3.0f;
 	nodes.resize(nNodes);
 			
 	imgRect = rect;
@@ -117,7 +119,7 @@ void Tree::getTreeDescriptor(QString& output, bool compact)
 	streamOut << "0 0 0\n";
 	if (!compact)
 	{
-		for (int i = 0; i < nodes.size(); i++)
+		for (unsigned int i = 0; i < nodes.size(); i++)
 		{
 			streamOut << nodes[i].index + 1 << " " << nodes[i].parent << " ";
 			for (int j = 0; j < 4; j++)
@@ -206,7 +208,7 @@ Splitter::Splitter(MultiLayerImage* image, int tileSize, int maxRamMB)
 	double temp = maxRamMB;
 	temp /= this->image->getNumLayers() * 3;
 	unsigned int side = sqrt(temp) * 1024;
-	maxLoadingSize =  1 << std::min((int)std::floor(std::log10f(side) / std::log10f(2.0f)), 13);
+	maxLoadingSize =  1 << std::min((int)floor(log10f(side) / log10f(2.0f)), 13);
 	tree.build(QRect(0, 0, image->width(), image->height()), this->tileSize);
 }
 
@@ -236,11 +238,11 @@ bool Splitter::split(const QString& destFolder, int quality, const QString& form
 	}
 	else
 	{
-		int startLevel = (int)(std::log10f(tree.maxSize / maxLoadingSize) / std::log10f(2.0f));
+		int startLevel = (int)(log10f(tree.maxSize / maxLoadingSize) / log10f(2.0f));
 		const int woffset = tree.imgRect.x();
 		const int hoffset = tree.imgRect.y();
 		int subImgSide = 1 << startLevel;
-		int numSubImg = std::powf(4.0, startLevel);
+		int numSubImg = powf(4.0, startLevel);
 		int startIndex = (numSubImg - 1.0f) / 3.0f;
 		QRect bigRect (0, 0, tree.maxSize, tree.maxSize);
 		std::vector<QImage> upLevelImg;
