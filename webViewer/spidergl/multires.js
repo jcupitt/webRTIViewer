@@ -154,7 +154,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 		} else if (i.msRequestFullscreen) {
 			i.msRequestFullscreen();
 		}
-		
+
 		i.style.height = screen.height + "px";
 		i.style.width = screen.width + "px";
 		var canvas = $("#" + idDiv + "_webgl");
@@ -228,7 +228,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	document.addEventListener("webkitfullscreenchange", function () {
 		if(!document.webkitIsFullScreen) fullScreenOff();
 	}, false);
-		
+
 	$( "#"+idDiv + "_guide" ).click(function(){$( "#"+idDiv + "_guide" ).hide();});
 
 
@@ -357,7 +357,7 @@ MultiRes.prototype = {
 		/*************************************************************/
 
 		this.renderer = new MultiResRenderer(gl, 256 * 1024 * 1024);
-		
+
 		this.translation = [ 0.0, 0.0 ];
 		this.mat = sglIdentityM4();
 		this.flipMatrix = sglIdentityM4();
@@ -374,10 +374,10 @@ MultiRes.prototype = {
 		this.translation = [ 0.0, 0.0 ];
 		this.mat = sglIdentityM4();
 		this.rendering = true;
-		
+
 		this.leftBottom = [(this.renderer._tree.scale[0] - this.renderer.imgWidth) / 2.0, (this.renderer._tree.scale[1] - this.renderer.imgHeight) / 2.0];
 		this.rightTop = [this.leftBottom[0] + this.renderer.imgWidth, this.leftBottom[1] + this.renderer.imgHeight];
-		
+
 		this.scale = 0;
 		var w = this.ui.width;
 		var h = this.ui.height;
@@ -407,7 +407,7 @@ MultiRes.prototype = {
 		if (keyString == "1") this.renderer.renderData = !this.renderer.renderData;
 		if (keyString == "2") this.renderer.renderBoxes = !this.renderer.renderBoxes;
 	},
- 
+
 	mouseWheel : function(gl, delta, x, y)
 	{
 		if (this.isMoving)
@@ -501,7 +501,7 @@ MultiRes.prototype = {
 				this.moveInterval = setInterval(function(){that._moveAnimation();}, 35);
 				this.renderer.updateData = false;
 				this.isMoving = true;
-				
+
 				this.computeModelMatrix();				
 				var matrix = this.xform.model.top;
 				var tempPos = [this.renderer._tree.scale[0] / 2.0, this.renderer._tree.scale[1] / 2.0 ];
@@ -518,7 +518,7 @@ MultiRes.prototype = {
 			this.animating = false;
 			return;
 		}
-		
+
 		var step = this.animationStack.splice(0, 1)[0];
 		var s = step[0];
 		tx = step[1];
@@ -577,10 +577,10 @@ MultiRes.prototype = {
 		}
 
 		this.mat = sglMulM4(sglTranslationM4C(tx, ty, 0.0), sglMulM4(sglScalingM4C(s, s, 1.0), sglMulM4(sglTranslationM4C(-tx, -ty, 0.0), this.mat)));
-		
+
 		this.translation[0] += deltaX;
 		this.translation[1] += deltaY;
-		
+
 		_SGL_RegisteredCanvas[this.canvas].requestDraw();
 		return;	
 	},
@@ -589,7 +589,7 @@ MultiRes.prototype = {
 	{
 		_SGL_RegisteredCanvas[this.canvas].mouseDown(e);
 	},
- 
+
 	mouseDown : function(gl, button, x, y)
 	{
 		if (this.animating)
@@ -607,7 +607,7 @@ MultiRes.prototype = {
 				this.currentPoint = [x, y];
 										
 				this.animationStack = [];
-				
+
 				var that = this;
 				clearInterval(this.zoomInterval);
 				clearInterval(this.moveInterval);
@@ -633,24 +633,24 @@ MultiRes.prototype = {
 			this.moveToCenter = false;
 			return;
 		}
-		
+
 		if (this.animationStack.length == 0)
 		{
 			this.currentSpeed = 0;
 			return;
 		}
 		var step = this.animationStack.splice(0, 1)[0];
-		
+
 		var deltaX = step[0] - this.currentPoint[0];
 		var deltaY = step[1] - this.currentPoint[1];
 		this.currentSpeed = step[2];
-		
+
 		this.translation[0] += deltaX;
 		this.translation[1] += deltaY;
-		
+
 		this.currentPoint[0] = step[0];
 		this.currentPoint[1] = step[1];
-		
+
 		_SGL_RegisteredCanvas[this.canvas].requestDraw();
 		return;
 	},
@@ -692,7 +692,7 @@ MultiRes.prototype = {
 				var endPoint = [x, y];
 				var deltaX = endPoint[0] - this.currentPoint[0];
 				var deltaY = endPoint[1] - this.currentPoint[1];
-				
+
 				var tmpVector = this._adjustTranslation(deltaX, deltaY);
 				endPoint = [this.currentPoint[0] + tmpVector[0], this.currentPoint[1] + tmpVector[1]];
 				this._updateMoveStack(this.currentPoint, endPoint, tmpVector);
@@ -733,7 +733,7 @@ MultiRes.prototype = {
 					tmpPoint[1] += y;
 					this.animationStack.push([tmpPoint[0], tmpPoint[1], speed, acceleration]);
 				}
-				
+
 				t = 3 * deltaPos / (2 * speed);
 				d = 4 * speed * speed * speed / (9 * deltaPos * deltaPos);
 				b = - 4 * speed * speed / (3 * deltaPos);
@@ -744,7 +744,7 @@ MultiRes.prototype = {
 				d = speed * speed * speed / (9 * deltaPos * deltaPos);
 				b = - 2 * speed * speed / (3 * deltaPos);
 			}					
-			
+
 			for (var i = 0 ; i < t; i++)
 			{
 				var delta = d * i + d / 3.0 + b / 2.0 + speed;
@@ -764,7 +764,7 @@ MultiRes.prototype = {
 	{
 		var translVector = sglV4C(this.translation[0] + deltaX, this.translation[1] + deltaY, 0, 1.0);
 		var m = this.returnModelMatrix(translVector, this.mat);
-		
+
 		var lb = sglMulM4V4(m, sglV4C(this.leftBottom[0], this.leftBottom[1], 0.0, 1.0)).slice(0,2);
 		var rt = sglMulM4V4(m, sglV4C(this.rightTop[0], this.rightTop[1], 0.0, 1.0)).slice(0,2);
 		lb[0] -= this.viewerdx;
@@ -823,7 +823,7 @@ MultiRes.prototype = {
 		this.xform.model.load(m);
 
 		var t = sglTranslationM4C(this.ui.width / 2.0, this.ui.height / 2.0, 0.0);
-		
+
 		this.xform.model.multiply(t);
 		this.xform.model.scale(this.scale, this.scale, 1.0);
 		this.xform.model.multiply(this.renderer.normalizedTreeTransform);
@@ -838,7 +838,7 @@ MultiRes.prototype = {
 		this.xform.model.load(m);
 
 		var t = sglTranslationM4C(this.ui.width / 2.0, this.ui.height / 2.0, 0.0);
-		
+
 		this.xform.model.multiply(t);
 		this.xform.model.scale(this.scale, this.scale, 1.0);
 		this.xform.model.multiply(this.renderer.normalizedTreeTransform);
@@ -851,18 +851,18 @@ MultiRes.prototype = {
 		this.translation = [ 0.0, 0.0 ];
 		this.mat = sglIdentityM4();
 		this.rendering = true;
-		
+
 		this.leftBottom = [(this.renderer._tree.scale[0] - this.renderer.imgWidth) / 2.0, (this.renderer._tree.scale[1] - this.renderer.imgHeight) / 2.0];
 		this.rightTop = [this.leftBottom[0] + this.renderer.imgWidth, this.leftBottom[1] + this.renderer.imgHeight];
-		
+
 		this.scale = 0;
 		var w = this.ui.width;
 		this.offsetHeight = 0;
 		var h = this.ui.height + this.offsetHeight;
-		
+
 		this.scale = Math.min(this.renderer._tree.scale[0] / this.renderer.imgWidth * w, this.renderer._tree.scale[1] / this.renderer.imgHeight * h);
 		this.maxScale = Math.max(this.renderer.imgWidth / w, this.renderer.imgHeight / h) * 3;
-		
+
 		this.viewerdx = this.ui.width / 2.0 - 10;
 		this.viewerdy = this.ui.height / 2.0 - 10;
 	},
@@ -889,11 +889,11 @@ MultiRes.prototype = {
 			this.xform.view.lookAt(0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 			this.computeModelMatrix();
-					
+
 			var m = this.xform.model.top;
 			if (this.onDrawCallback)
 				this.onDrawCallback(m);
-			
+
 			this.renderer.render(this.xform.projectionMatrix, this.xform.modelViewMatrix, [ 0, 0, w, h ]);
 		}
 	},
@@ -1058,7 +1058,7 @@ MultiResTree.prototype = {
 							node.childrenIndices[c] = index * 4 + 1 + (c + 2) % 4;
 					}					
 					node.projectedSize = tileSize;
-								
+
 					if (index > 0)
 					{
 						var t = index % 4;
@@ -1272,7 +1272,7 @@ function MultiResRenderer(gl, cacheSizeInBytes, onLoad)
 	"gl_FragData[0] = vec4(0.0);}";	
 	this.texProg = new SglProgram(this.gl, [texVsrc], [texFsrc]);
 	log(this.texProg.log);
-		
+
 	var lgPositions = new Float32Array
 	([
 		 0, 0,
@@ -1319,17 +1319,17 @@ MultiResRenderer.prototype = {
 				if (phi < 0) 
 					phi = 2 * Math.PI + phi;
 				var theta = Math.min(Math.acos(lpos[2]), Math.PI / 2 - 0.15);
-					
+
 				var cosPhi = Math.cos(phi);
 				var cosTheta = Math.cos(theta);
 				var cosTheta2 = cosTheta * cosTheta;
-				
+
 				var lweights = new Array(9);
 				lweights[0] = 1.0 / Math.sqrt(2.0 * Math.PI);
 				lweights[1] = Math.sqrt(6.0 / Math.PI) * (cosPhi * Math.sqrt(cosTheta-cosTheta2));
 				lweights[2] = Math.sqrt(3.0 / (2.0 * Math.PI)) * (-1.0 + 2.0*cosTheta);
 				lweights[3] = Math.sqrt(6.0 / Math.PI) * (Math.sqrt(cosTheta - cosTheta2) * Math.sin(phi));
-				
+
 				lweights[4] = Math.sqrt(30.0 / Math.PI) * (Math.cos(2.0 * phi) * (-cosTheta + cosTheta2));
 				lweights[5] = Math.sqrt(30.0 / Math.PI) * (cosPhi*(-1.0 + 2.0 * cosTheta) * Math.sqrt(cosTheta - cosTheta2));
 				lweights[6] = Math.sqrt(5.0 / (2.0 * Math.PI)) * (1.0 - 6.0 * cosTheta + 6.0 * cosTheta2);
@@ -1377,7 +1377,7 @@ MultiResRenderer.prototype = {
 				var scale = doc.getElementsByTagName("Scale")[0];
 				var bias = doc.getElementsByTagName("Bias")[0];
 				tree = doc.getElementsByTagName("Tree")[0];
-							
+
 				this.imgWidth = parseInt(size.getAttribute("width"));
 				this.imgHeight = parseInt(size.getAttribute("height"));
 				this.ordlen = parseInt(size.getAttribute("coefficients"));
@@ -1389,7 +1389,7 @@ MultiResRenderer.prototype = {
 				this.gmax = [];
 				for (var j = 0; j < this.ordlen; j++ )
 					this.gmax[j] = parseFloat(tokens[j]);
-						
+
 				tokens = bias.childNodes[0].nodeValue.split(" ");
 				if (tokens.length < this.ordlen) return;
 				this.gmin = [];
@@ -1399,7 +1399,7 @@ MultiResRenderer.prototype = {
 			case 4:
 				var size = doc.getElementsByTagName("Size")[0];
 				tree = doc.getElementsByTagName("Tree")[0];
-							
+
 				this.imgWidth = parseInt(size.getAttribute("width"));
 				this.imgHeight = parseInt(size.getAttribute("height"));
 				this.ordlen = parseInt(size.getAttribute("coefficients"));
@@ -1408,13 +1408,13 @@ MultiResRenderer.prototype = {
 			default:
 				return;		
 		}
-		
-		
+
+
 		if (this._tree)
 			this._tree.destroy(this._destroyData);
-		
+
 		this._tree.load(tree.textContent, this.imgWidth, this.imgHeight);
-		
+
 		this._url  = url;
 		this._timestamp = 0;
 		this._frustum = new SglFrustum();
@@ -1427,7 +1427,7 @@ MultiResRenderer.prototype = {
 
 		this.renderData  = true;
 		this.renderBoxes = false;
-		
+
 		//var lpos = [0.241844, 0.241844, 0.939692]
 		//lpos = sglNormalizedV3(lpos);
 		//this.lightPos = lpos.slice(0, 3);
@@ -1472,18 +1472,18 @@ MultiResRenderer.prototype = {
 		this._renderer = new SglMeshGLRenderer(this._program);
 		this._treeTransform = sglIdentityM4();
 		this._normalizedTreeTransform = sglIdentityM4();
-		
+
 		this.leftTex = (this._tree.scale[0] - this.imgWidth) / 2.0; 
 		this.rightTex = this.leftTex + this.imgWidth; 
-		
+
 		this.bottomTex = (this._tree.scale[1] - this.imgHeight) / 2.0; 
 		this.topTex = this.bottomTex + this.imgHeight;
 		this.leftTex /= this._tree.scale[0];
 		this.rightTex /= this._tree.scale[0];
-		
+
 		this.bottomTex /= this._tree.scale[1];
 		this.topTex /= this._tree.scale[1];
-		
+
 		if (this._tree.ready) 
 			this._setupTree();
 	},
@@ -1631,7 +1631,7 @@ MultiResRenderer.prototype = {
 		var image = new Image();
 		var dataURL = canvas.toDataURL("image/png");
 		image.src = dataURL;
-		
+
 		var that = this;
 		image.onload = function() 
 						{ 
@@ -1643,8 +1643,8 @@ MultiResRenderer.prototype = {
 							};
 							that.lgtex = new SglTexture2D(that.gl, image, texOpt);
 						}
-		
-		
+
+
 		var error = this.gl.getError();
 		console.log(error);
 	},
@@ -1675,7 +1675,7 @@ MultiResRenderer.prototype = {
 		if (!data) return;
 		for (var i = 0; i < data.textures.length; ++i) 
 			data.textures[i].destroy();
-		
+
 		data.textures = null;
 	},
 
@@ -1710,7 +1710,7 @@ MultiResRenderer.prototype = {
 
 		if (n.zScale == 0)
 			return result;
-		
+
 		// test visibility only if parent is not completely inside frustum
 		if (!parentFullyVisible) 
 		{
@@ -1818,7 +1818,7 @@ MultiResRenderer.prototype = {
 		var samplers = [];
 		for (var i = 0; i < this.numLayers; i++)
 			samplers['coeff' + i] = n.data.textures[i];
-		
+
 		this._renderer.setUniforms(uniforms);
 		this._renderer.setSamplers(samplers);
 		this._renderer.render();
@@ -1842,7 +1842,7 @@ MultiResRenderer.prototype = {
 			bottomTex                      : this.bottomTex,
 			topTex                         : this.topTex
 		}
-		
+
 		if (this.enumType[this.type] != 4)
 		{
 			for (var i = 0; i < this.ordlen; i++)
@@ -1852,7 +1852,7 @@ MultiResRenderer.prototype = {
 				uniforms['lweight' + i] = this.lweights[i];
 			}
 		}
-		
+
 		this._renderer.begin();
 			this._renderer.setUniforms(uniforms);
 			this._renderer.beginMesh(mesh);
@@ -1879,7 +1879,7 @@ MultiResRenderer.prototype = {
 		var samplers = [];
 		for (var i = 0; i < this.numLayers; i++)
 			samplers['coeff' + i] = n.data.textures[i];
-		
+
 		this._renderer.setSamplers(samplers);
 
 		var scaleBias = [
@@ -1918,7 +1918,7 @@ MultiResRenderer.prototype = {
 			bottomTex                      : this.bottomTex,
 			topTex                         : this.topTex
 		}
-		
+
 		if (this.enumType[this.type] != 4)
 		{
 			for (var i = 0; i < this.ordlen; i++)
@@ -1928,7 +1928,7 @@ MultiResRenderer.prototype = {
 				uniforms['lweight' + i] = this.lweights[i];
 			}
 		}
-		
+
 		this._renderer.begin();
 			this._renderer.setUniforms(uniforms);
 			this._renderer.beginMesh(mesh);
@@ -2054,7 +2054,7 @@ MultiResRenderer.prototype = {
 
 		if (this.renderBoxes) 
 			this._renderNodesBoxes(mvp);
-		
+
 		if (this.lg && this.lgtex != null)
 		{
 			this.gl.enable(this.gl.BLEND);
@@ -2103,10 +2103,10 @@ MultiResRenderer.prototype = {
 			var cimgs = new Array(r.requests.length);
 			for (var i=0; i<cimgs.length; ++i)
 				cimgs[i] = r.requests[i].image;
-				
+
 			if (n.data)
 				this._destroyData(n.data);
-			
+
 			n.data = this._createData(cimgs);
 		}
 
@@ -2160,7 +2160,7 @@ MultiResRenderer.prototype = {
 			canRequest = true;
 			if ((lastItem != null) && (cs >= this._maxCacheSize)) 
 				canRequest = (_MultiResCompareNodes(n, lastItem) < 0);
-			
+
 			if (canRequest)
 			{
 				this._requestNode(n);
