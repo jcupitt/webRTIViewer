@@ -144,7 +144,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	
 	
 	function fullScreenOn(){
-		var i = document.getElementById("viewerContainer_div");
+		var i = document.getElementById(idDiv + "_div");
 		if (i.requestFullscreen) {
 			i.requestFullscreen();
 		} else if (i.webkitRequestFullscreen) {
@@ -157,7 +157,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 		
 		i.style.height = screen.height + "px";
 		i.style.width = screen.width + "px";
-		var canvas = $("#viewerContainer_webgl");
+		var canvas = $("#" + idDiv + "_webgl");
 		canvas.height(screen.height);
 		canvas.width(screen.width);
 		canvas.attr("width", screen.width);
