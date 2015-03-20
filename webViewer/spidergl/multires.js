@@ -96,7 +96,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	  text: false,
       label: "Zoom In"
     }).click(function(){multiResRTI.startZoomIn();});
-	
+
 	$( "#"+idDiv + "_div #zoomOut" ).button({
       icons: {
         primary: "zoomOutIcon toolbarIcon"
@@ -104,7 +104,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	  text: false,
       label: "Zoom Out"
     }).click(function(){multiResRTI.startZoomOut();});
-	
+
 	$( "#"+idDiv + "_div #light" ).button({
       icons: {
         primary: "lightIcon toolbarIcon"
@@ -133,7 +133,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 		}
 		$( this ).button( "option", options );
 	});
-	
+
 	$( "#"+idDiv + "_div #help" ).button({
       icons: {
         primary: "helpIcon toolbarIcon"
@@ -141,8 +141,8 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	  text: false,
       label: "Help"
     }).click(function(){$( "#"+idDiv + "_guide" ).show();});
-	
-	
+
+
 	function fullScreenOn(){
 		var i = document.getElementById(idDiv + "_div");
 		if (i.requestFullscreen) {
@@ -172,7 +172,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 				};
 		$( "#"+idDiv + "_div #fullscreen").button( "option", options );
 	};
-	
+
 	function fullScreenOff(){
 		var i = document.getElementById(idDiv + "_div");
 		if (document.exitFullscreen) {
@@ -201,7 +201,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 				};
 		$( "#"+idDiv + "_div #fullscreen").button( "option", options );
 	};
-	
+
 	$( "#"+idDiv + "_div #fullscreen" ).button({
       icons: {
         primary: "fullIcon toolbarIcon"
@@ -218,7 +218,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 			$("#"+idDiv + "_div #fullscreen").removeClass("ui-state-hover");
 		}
 	);
-	
+
 	document.addEventListener("MSFullscreenChange", function () {
     if(!document.msFullscreenElement) fullScreenOff();
 	}, false);
@@ -230,8 +230,8 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	}, false);
 		
 	$( "#"+idDiv + "_guide" ).click(function(){$( "#"+idDiv + "_guide" ).hide();});
-	
-	
+
+
 	var divError = document.createElement("div");
 	divError.id = idDiv + "_error";
 	divError.style.width = "100%";
@@ -241,7 +241,7 @@ function createRtiViewer(idDiv, imageUrl, width, height)
 	divError.style.top = "0px";
 	divError.style.color = "#FFFFFF";
 	divError.style.backgroundColor="rgba(0, 0, 0, 1.0)";
-	
+
 	divError.innerHTML = '<canvas id = "testCanvas" width= "800" height= "600" contenteditable="true"></canvas>';
 	divError.style.display = "none";
 	canvasNode.append(divError);
@@ -288,7 +288,7 @@ function MultiRes(canvas)
 	this.moveToCenter = false;
 	this.imageUrl = "";
 	this.OnLoadImageCallback = null;
-	
+
 	this.currentSpeed = 0.0;
 	this.maxStep = 7;
 	this.animationStack = [];
@@ -304,7 +304,7 @@ MultiRes.prototype = {
 		this.mode = x;
 	},			
 
-	
+
 	_setLightDir : function(x, y) 
 	{
 		var lx = ((x / this.ui.width) * 2.2 - 1.1);
@@ -336,13 +336,13 @@ MultiRes.prototype = {
 		this.mat = sglIdentityM4();
 		this.flipMatrix = sglIdentityM4();
 	},
-	
-	
+
+
 	setImageUrl: function(url)
 	{
 		this.imageUrl = url;
 	},
-	
+
 	setOnLoadImageCallback: function(callback)
 	{
 		this.OnLoadImageCallback = callback;
@@ -364,8 +364,8 @@ MultiRes.prototype = {
 		if (this.imageUrl != "")
 			this.loadImage(this.imageUrl);
 	},
-	
-	
+
+
 	loadImage : function(url)
 	{
 		this.renderer.loadImage(url);
@@ -388,13 +388,13 @@ MultiRes.prototype = {
 		this.viewerdx = 100;
 		this.viewerdy = 100;
 	},			
-	
-	
+
+
 	stopRendering: function()
 	{
 		this.rendering = false;
 	},
-	
+
 	setOnDrawCallback: function(onDraw)
 	{
 		if (onDraw)
@@ -417,8 +417,8 @@ MultiRes.prototype = {
 		var s = sglPow(0.98, 10 * delta);
 		this._startZoom(s, tx, ty);
 	},
-	
-	
+
+
 	startZoomIn: function()
 	{
 		if (this.isMoving)
@@ -428,8 +428,8 @@ MultiRes.prototype = {
 		var s = 1.2;
 		this._startZoom(s, tx, ty);
 	},
-	
-	
+
+
 	startZoomOut: function()
 	{
 		if (this.isMoving)
@@ -439,8 +439,8 @@ MultiRes.prototype = {
 		var s = 0.8;
 		this._startZoom(s, tx, ty);
 	},
-	
-	
+
+
 	_startZoom: function(s, tx, ty)
 	{
 		var tmp = this.mat[0] * s;
@@ -488,7 +488,7 @@ MultiRes.prototype = {
 		}
 		return false;
 	},
-	
+
 	_zoomAnimation: function()
 	{
 		if (this.animationStack.length == 0)
@@ -584,7 +584,7 @@ MultiRes.prototype = {
 		_SGL_RegisteredCanvas[this.canvas].requestDraw();
 		return;	
 	},
-	
+
 	sendMouseDown : function(e)
 	{
 		_SGL_RegisteredCanvas[this.canvas].mouseDown(e);
@@ -621,7 +621,7 @@ MultiRes.prototype = {
 			return true;
 		}
 	},
-	
+
 	_moveAnimation: function()
 	{
 		if ((this.moveToCenter ||this.endAnimation) && this.animationStack.length == 0)
@@ -654,8 +654,8 @@ MultiRes.prototype = {
 		_SGL_RegisteredCanvas[this.canvas].requestDraw();
 		return;
 	},
-	
-	
+
+
 	mouseUp : function(gl, button, x, y)
 	{
 		if (button == 0)
@@ -669,7 +669,7 @@ MultiRes.prototype = {
 		}
 		return false;
 	},
-	
+
 	mouseOut:function(gl, button, x, y)
 	{
 		this.endAnimation = true;
@@ -704,8 +704,8 @@ MultiRes.prototype = {
 		}
 		return false;
 	},
-	
-	
+
+
 	_updateMoveStack: function(startPoint, endPoint, deltaVect)
 	{
 		var deltaPos = sglLengthV2(deltaVect);
@@ -759,7 +759,7 @@ MultiRes.prototype = {
 			this.animationStack.push([endPoint[0], endPoint[1], 0, 0]);	
 		}
 	},
-	
+
 	_adjustTranslation: function(deltaX, deltaY)
 	{
 		var translVector = sglV4C(this.translation[0] + deltaX, this.translation[1] + deltaY, 0, 1.0);
@@ -809,19 +809,19 @@ MultiRes.prototype = {
 		}
 		return sglV2C(realDeltaX, realDeltaY);	
 	},
-	
+
 	update : function(gl, dt)
 	{
 		;
 	},
-	
-	
+
+
 	returnModelMatrix: function(translVect, scaleMatrix)
 	{
 		var m = (sglMulM4(sglTranslationM4C(translVect[0], translVect[1], 1.0), scaleMatrix));
 		m = sglMulM4(this.flipMatrix, m);
 		this.xform.model.load(m);
-	
+
 		var t = sglTranslationM4C(this.ui.width / 2.0, this.ui.height / 2.0, 0.0);
 		
 		this.xform.model.multiply(t);
@@ -829,22 +829,22 @@ MultiRes.prototype = {
 		this.xform.model.multiply(this.renderer.normalizedTreeTransform);
 		return this.xform.model.top;
 	},
-	
-	
+
+
 	computeModelMatrix: function()
 	{
 		var m = (sglMulM4(sglTranslationM4C(this.translation[0], this.translation[1], 1.0), this.mat));
 		m = sglMulM4(this.flipMatrix, m);
 		this.xform.model.load(m);
-	
+
 		var t = sglTranslationM4C(this.ui.width / 2.0, this.ui.height / 2.0, 0.0);
 		
 		this.xform.model.multiply(t);
 		this.xform.model.scale(this.scale, this.scale, 1.0);
 		this.xform.model.multiply(this.renderer.normalizedTreeTransform);
 	},
-	
-	
+
+
 	resize : function()
 	{
 		this.xform  = new SglTransformStack();
@@ -866,7 +866,7 @@ MultiRes.prototype = {
 		this.viewerdx = this.ui.width / 2.0 - 10;
 		this.viewerdy = this.ui.height / 2.0 - 10;
 	},
-	
+
 
 	draw : function(gl)
 	{
@@ -1172,7 +1172,7 @@ function _MultiResCompareNodes(a, b)
 	// higher timestamp first
 	if (a.priority.timestamp != b.priority.timestamp)
 		return (b.priority.timestamp - a.priority.timestamp);
-	
+
 	// higher error first
 	if (a.priority.error != b.priority.error)
 		return (b.priority.error - a.priority.error);
@@ -1299,7 +1299,7 @@ function MultiResRenderer(gl, cacheSizeInBytes, onLoad)
 		this.lgtex = null;
 		this._createLg();
 	}
-	
+
 	this.enumType = new Object();
 	this.enumType["HSH_RTI"] = 1;
 	this.enumType["LRGB_PTM"] = 2;
@@ -1350,8 +1350,8 @@ MultiResRenderer.prototype = {
 		}
 		return [];
 	},
-	
-	
+
+
 	loadImage: function(url)
 	{
 		var xhttp=new XMLHttpRequest();
@@ -1669,7 +1669,7 @@ MultiResRenderer.prototype = {
 		return data;
 	},
 
-	
+
 	_destroyData : function(data) 
 	{
 		if (!data) return;
@@ -1679,7 +1679,7 @@ MultiResRenderer.prototype = {
 		data.textures = null;
 	},
 
-	
+
 	_requestNode : function(n)
 	{
 		if (n.req) return;
@@ -1700,7 +1700,7 @@ MultiResRenderer.prototype = {
 		watcher.send();
 	},
 
-	
+
 	_collectNodesRec : function(n, parentFullyVisible)
 	{
 		var result = {
@@ -1794,7 +1794,7 @@ MultiResRenderer.prototype = {
 		return result;
 	},
 
-	
+
 	_collectNodes : function() 
 	{
 		this._toRequest = [ ];
@@ -1807,7 +1807,7 @@ MultiResRenderer.prototype = {
 		this._collectNodesRec(root, false);
 	},
 
-	
+
 	_renderNodeFullRes : function(n)
 	{
 		var uniforms = {
@@ -2138,7 +2138,7 @@ MultiResRenderer.prototype = {
 			this._cache.sort(_MultiResCompareNodes);
 	},
 
-	
+
 	_requestNodes : function() 
 	{
 		var cs = this._cache.length;
@@ -2169,7 +2169,7 @@ MultiResRenderer.prototype = {
 		}
 	},
 
-	
+
 	_calculateNormalizedTreeTransform : function() 
 	{
 		var root = this._tree.root;
@@ -2236,7 +2236,7 @@ MultiResRenderer.prototype = {
 		this._calculateNormalizedTreeTransform();
 	},
 
-	
+
 	render : function(projectionMatrix, modelViewMatrix, viewport)
 	{
 		if (!this._tree.root) return;
@@ -2249,7 +2249,7 @@ MultiResRenderer.prototype = {
 		}
 	},
 
-	
+
 	get normalizedTreeTransform() 
 	{
 		return this._normalizedTreeTransform;
