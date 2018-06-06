@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [this repository is a development copy of the code at
 http://vcg.isti.cnr.it/~palma/webRTIViewer.zip ... any changes here are
 expected to be folded back into the master distribution, see CHANGELOG.md
@@ -16,6 +17,37 @@ to load in your web server.  In the folders `webGLRTIMaker-win-x86` and
 `webGLRTIMaker-win-x64` there are the 32 and 64 bit versions of the tool
 for Windows. The folder `webGLRTIMaker-src` contains the source code. It
 requires a recent version of the framework QT.
+
+### Building in Linux
+
+WebRTIViewer has been build successfully in *Debian GNU/Linux buster/sid*
+with QT5, using the following steps.
+
+```shell
+# System information.
+$ uname -a
+Linux x220 4.16.0-2-amd64 #1 SMP Debian 4.16.12-1 (2018-05-27) x86_64 GNU/Linux
+
+# Install dependencies.
+$ sudo apt update
+$ sudo apt install qt5-qmake qt5-default
+
+# Verify installation of QT5/QMake
+$ qmake -v
+QMake version 3.1
+Using Qt version 5.10.1 in /usr/lib/x86_64-linux-gnu
+
+# Clone webRTIViewer from Github
+$ git clone git@github.com:jcupitt/webRTIViewer.git
+$ cd webRTIViewer
+$ mkdir build
+$ cd build
+$ qmake ../webGLRtiMaker.pro
+$ make
+
+# Optionally, install executable in /usr/local/bin
+$ sudo cp webGLRtiMaker /usr/local/bin
+```
 
 ## PREPROCESSING 
 
