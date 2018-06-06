@@ -20,9 +20,9 @@ requires a recent version of the framework QT.
 
 ### Building in Linux
 
-You can build with cmake or autotools.
+You can build with qmake or autotools.
 
-For cmake, use the following steps:
+For qmake, use the following steps:
 
 ```shell
 # System information.
@@ -31,7 +31,7 @@ Linux x220 4.16.0-2-amd64 #1 SMP Debian 4.16.12-1 (2018-05-27) x86_64 GNU/Linux
 
 # Install dependencies.
 $ sudo apt update
-$ sudo apt install qt5-qmake qt5-default
+$ sudo apt install qt5-default
 
 # Verify installation of QT5/QMake
 $ qmake -v
@@ -40,7 +40,7 @@ Using Qt version 5.10.1 in /usr/lib/x86_64-linux-gnu
 
 # Clone webRTIViewer from Github
 $ git clone git@github.com:jcupitt/webRTIViewer.git
-$ cd webRTIViewer
+$ cd webGLRTIMaker-src
 $ mkdir build
 $ cd build
 $ qmake ../webGLRtiMaker.pro
@@ -55,7 +55,7 @@ For autotools, use:
 ```
 # Install dependencies.
 $ sudo apt update
-$ sudo apt install qt5-qmake qt5-default
+$ sudo apt install qt5-default
 
 # Clone webRTIViewer from Github
 $ git clone git@github.com:jcupitt/webRTIViewer.git
