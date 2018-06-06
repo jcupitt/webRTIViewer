@@ -20,8 +20,9 @@ requires a recent version of the framework QT.
 
 ### Building in Linux
 
-WebRTIViewer has been build successfully in *Debian GNU/Linux buster/sid*
-with QT5, using the following steps.
+You can build with cmake or autotools.
+
+For cmake, use the following steps:
 
 ```shell
 # System information.
@@ -47,6 +48,24 @@ $ make
 
 # Optionally, install executable in /usr/local/bin
 $ sudo cp webGLRtiMaker /usr/local/bin
+```
+
+For autotools, use:
+
+```
+# Install dependencies.
+$ sudo apt update
+$ sudo apt install qt5-qmake qt5-default
+
+# Clone webRTIViewer from Github
+$ git clone git@github.com:jcupitt/webRTIViewer.git
+$ cd webRTIViewer
+$ ./boostrap.sh
+$ ./configure
+$ make
+
+# Optionally, install executable in /usr/local/bin
+$ sudo make install
 ```
 
 ## PREPROCESSING 
