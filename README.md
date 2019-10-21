@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [this repository is a development copy of the code at
 http://vcg.isti.cnr.it/~palma/webRTIViewer.zip ... any changes here are
 expected to be folded back into the master distribution, see CHANGELOG.md
